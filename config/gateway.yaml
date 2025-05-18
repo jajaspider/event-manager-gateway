@@ -1,0 +1,6 @@
+jwt:
+  secret: 'default'
+
+event_manager:
+  auth: 127.0.0.1:25002
+  api: 127.0.0.1:25003
