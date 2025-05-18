@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 
 import { CreateRewardDto } from './dto/create-reward.dto';
 import { QueryRewardClaimDto } from '../reward-claims/dto/reward-query.dto';
+import { Request } from '../interfaces/request.interface';
 
 const config = yaml.load(fs.readFileSync('config/gateway.yaml', 'utf8')) as any;
 
@@ -59,11 +60,12 @@ export class EventService {
 
     }
 
-    async requestEventReward(id: string, rewardRequest: CreateRewardDto) {
+    async requestEventReward(req: Request, id: string, rewardRequest: CreateRewardDto) {
         try {
             const eventUrl = `http://${config.event_manager.api}/v0/reward-claims/`;
+            console.dir(req.user);
             const response = await axios.post(eventUrl, {
-                user_id: "123",
+                user_id: req.user.user_id,
                 event_id: id,
                 reward_id: rewardRequest.reward_id
             });
