@@ -13,15 +13,34 @@ const config = yaml.load(fs.readFileSync('config/gateway.yaml', 'utf8')) as any;
 export class EventService {
 
     async findAllEvents() {
-        const eventUrl = `http://${config.event_manager.api}/v0/events`;
-        const events = await axios.get(eventUrl);
-        return events.data;
+        try {
+            const eventUrl = `http://${config.event_manager.api}/v0/events`;
+            const events = await axios.get(eventUrl);
+            return events.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                const httpStatus = error.response.status;
+                const errorMessage = error.response.data.message;
+                throw new HttpException(errorMessage, httpStatus);
+            }
+            throw error;
+        }
     }
 
+
     async findEventById(id: string) {
-        const eventUrl = `http://${config.event_manager.api}/v0/events/${id}`;
-        const event = await axios.get(eventUrl);
-        return event.data;
+        try {
+            const eventUrl = `http://${config.event_manager.api}/v0/events/${id}`;
+            const event = await axios.get(eventUrl);
+            return event.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                const httpStatus = error.response.status;
+                const errorMessage = error.response.data.message;
+                throw new HttpException(errorMessage, httpStatus);
+            }
+            throw error;
+        }
     }
 
     async createEvent(event: any) {
@@ -78,6 +97,20 @@ export class EventService {
         try {
             const eventUrl = `http://${config.event_manager.api}/v0/reward-claims/`;
             const response = await axios.get(eventUrl, { params: query });
+            return response.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                const httpStatus = error.response.status;
+                const errorMessage = error.response.data.message;
+                throw new HttpException(errorMessage, httpStatus);
+            }
+        }
+    }
+
+    async deactivateEvent(id: string) {
+        try {
+            const eventUrl = `http://${config.event_manager.api}/v0/events/${id}/deactivate`;
+            const response = await axios.post(eventUrl);
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {

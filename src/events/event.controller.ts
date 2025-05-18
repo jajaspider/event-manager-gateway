@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Version, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Version, Body, Param, Put } from '@nestjs/common';
 
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -30,6 +30,12 @@ export class EventController {
     @Version('0')
     async requestEventReward(@Param('id') id: string, @Body() rewardRequest: CreateRewardDto) {
         return await this.eventService.requestEventReward(id, rewardRequest);
+    }
+
+    @Put(':id/deactivate')
+    @Version('0')
+    async deactivateEvent(@Param('id') id: string) {
+        return await this.eventService.deactivateEvent(id);
     }
 
 }
