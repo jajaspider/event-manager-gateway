@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       network: host
-    image: sonaapi/event-gateway:0.0.1
+    image: sonaapi/event-gateway:1.0.0
     hostname: event-gateway
     container_name: event-gateway
     network_mode: host
