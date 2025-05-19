@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  event-manager-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+    image: sonaapi/event-gateway:0.0.1
+    hostname: event-gateway
+    container_name: event-gateway
+    network_mode: host
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '100m'
+        max-file: '3'
+    volumes:
+      - ./config:/app/config
