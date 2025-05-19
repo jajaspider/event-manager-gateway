@@ -5,9 +5,10 @@ import { UsersModule } from './users/users.module';
 import { EventsModule } from './events/events.module';
 import { AuthsModule } from './auth/auths.module';
 import { JwtModule } from '@nestjs/jwt';
+import { RewardHistoryModule } from './reward-history/reward-history.module';
 
 @Module({
-  imports: [UsersModule, EventsModule, AuthsModule,
+  imports: [UsersModule, EventsModule, AuthsModule, RewardHistoryModule,
     JwtModule.register({
       global: true,
       secret: 'secret',
